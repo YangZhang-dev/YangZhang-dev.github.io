@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-beta.60" />
+    <meta name="theme" content="VuePress Theme Hope" />
+    <meta property="og:url" content="https://yangzhang-dev.github.io/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html"><meta property="og:site_name" content="zzys"><meta property="og:title" content="图相关的基本算法"><meta property="og:description" content="有关图的算法，包括最短路，最小生成树，二分图"><meta property="og:type" content="article"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="zzys"><meta property="article:tag" content="图"><meta property="article:tag" content="最短路"><meta property="article:tag" content="最小生成树"><meta property="article:tag" content="二分图"><meta property="article:published_time" content="2023-02-11T00:00:00.000Z"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"图相关的基本算法","image":[""],"datePublished":"2023-02-11T00:00:00.000Z","dateModified":null,"author":[{"@type":"Person","name":"zzys"}]}</script><title>图相关的基本算法 | zzys</title><meta name="description" content="有关图的算法，包括最短路，最小生成树，二分图">
+    <style>
+      :root {
+        --bg-color: #fff;
+      }
+
+      html[data-theme="dark"] {
+        --bg-color: #1d1e1f;
+      }
+
+      html,
+      body {
+        background: var(--bg-color);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem("vuepress-theme-hope-scheme");
+      const systemDarkMode =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+      if (userMode === "dark" || (userMode !== "light" && systemDarkMode)) {
+        document.querySelector("html").setAttribute("data-theme", "dark");
+      }
+    </script>
+    <link rel="preload" href="/assets/style-fef24637.css" as="style"><link rel="stylesheet" href="/assets/style-fef24637.css">
+    <link rel="modulepreload" href="/assets/app-91e7e107.js"><link rel="modulepreload" href="/assets/framework-6ad85d54.js"><link rel="modulepreload" href="/assets/图相关的基本算法.html-f05bff1c.js"><link rel="modulepreload" href="/assets/图相关的基本算法.html-e13d285e.js">
+  </head>
+  <body>
+    <div id="app"><!--[--><!--[--><!--[--><span tabindex="-1"></span><a href="#main-content" class="skip-link sr-only">跳至主要內容</a><!--]--><!--[--><div class="theme-container has-toc"><!--[--><header class="navbar auto-hide" id="navbar"><div class="navbar-start"><button class="toggle-sidebar-button" title="Toggle Sidebar"><span class="icon"></span></button><!--[--><!----><!--]--><a href="/" class="brand"><!----><!----><span class="site-name">zzys</span></a><!--[--><!----><!--]--></div><div class="navbar-center"><!--[--><!----><!--]--><nav class="nav-links"><div class="nav-item hide-in-mobile"><a href="/" class="nav-link" aria-label="主页"><span class="font-icon icon iconfont icon-home" style=""></span>主页<!----></a></div><div class="nav-item hide-in-mobile"><a href="/note" class="nav-link active" aria-label="笔记"><span class="font-icon icon iconfont icon-edit" style=""></span>笔记<!----></a></div><div class="nav-item hide-in-mobile"><a href="/question" class="nav-link" aria-label="疑问"><span class="font-icon icon iconfont icon-question" style=""></span>疑问<!----></a></div><div class="nav-item hide-in-mobile"><a href="/source" class="nav-link" aria-label="资源和模板"><span class="font-icon icon iconfont icon-list" style=""></span>资源和模板<!----></a></div></nav><!--[--><!----><!--]--></div><div class="navbar-end"><!--[--><!----><!--]--><!----><!----><div class="nav-item hide-in-mobile"><button id="appearance-switch"><svg xmlns="http://www.w3.org/2000/svg" class="icon auto-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="auto icon" style="display:block;"><path d="M512 992C246.92 992 32 777.08 32 512S246.92 32 512 32s480 214.92 480 480-214.92 480-480 480zm0-840c-198.78 0-360 161.22-360 360 0 198.84 161.22 360 360 360s360-161.16 360-360c0-198.78-161.22-360-360-360zm0 660V212c165.72 0 300 134.34 300 300 0 165.72-134.28 300-300 300z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="dark icon" style="display:none;"><path d="M524.8 938.667h-4.267a439.893 439.893 0 0 1-313.173-134.4 446.293 446.293 0 0 1-11.093-597.334A432.213 432.213 0 0 1 366.933 90.027a42.667 42.667 0 0 1 45.227 9.386 42.667 42.667 0 0 1 10.24 42.667 358.4 358.4 0 0 0 82.773 375.893 361.387 361.387 0 0 0 376.747 82.774 42.667 42.667 0 0 1 54.187 55.04 433.493 433.493 0 0 1-99.84 154.88 438.613 438.613 0 0 1-311.467 128z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="light icon" style="display:none;"><path d="M952 552h-80a40 40 0 0 1 0-80h80a40 40 0 0 1 0 80zM801.88 280.08a41 41 0 0 1-57.96-57.96l57.96-58a41.04 41.04 0 0 1 58 58l-58 57.96zM512 752a240 240 0 1 1 0-480 240 240 0 0 1 0 480zm0-560a40 40 0 0 1-40-40V72a40 40 0 0 1 80 0v80a40 40 0 0 1-40 40zm-289.88 88.08-58-57.96a41.04 41.04 0 0 1 58-58l57.96 58a41 41 0 0 1-57.96 57.96zM192 512a40 40 0 0 1-40 40H72a40 40 0 0 1 0-80h80a40 40 0 0 1 40 40zm30.12 231.92a41 41 0 0 1 57.96 57.96l-57.96 58a41.04 41.04 0 0 1-58-58l58-57.96zM512 832a40 40 0 0 1 40 40v80a40 40 0 0 1-80 0v-80a40 40 0 0 1 40-40zm289.88-88.08 58 57.96a41.04 41.04 0 0 1-58 58l-57.96-58a41 41 0 0 1 57.96-57.96z"></path></svg></button></div><!--[--><button class="search-pro-button" role="search" aria-label="搜索"><svg xmlns="http://www.w3.org/2000/svg" class="icon search-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="search icon"><path d="M192 480a256 256 0 1 1 512 0 256 256 0 0 1-512 0m631.776 362.496-143.2-143.168A318.464 318.464 0 0 0 768 480c0-176.736-143.264-320-320-320S128 303.264 128 480s143.264 320 320 320a318.016 318.016 0 0 0 184.16-58.592l146.336 146.368c12.512 12.48 32.768 12.48 45.28 0 12.48-12.512 12.48-32.768 0-45.28"></path></svg><div class="placeholder">搜索</div><div class="key-hints"><kbd class="key">Ctrl</kbd><kbd class="key">K</kbd></div></button><!--]--><!--[--><!----><!--]--><button class="toggle-navbar-button" aria-label="Toggle Navbar" aria-expanded="false" aria-controls="nav-screen"><span class="button-container"><span class="button-top"></span><span class="button-middle"></span><span class="button-bottom"></span></span></button></div></header><!----><!--]--><!----><div class="toggle-sidebar-wrapper"><span class="arrow start"></span></div><aside class="sidebar" id="sidebar"><!--[--><!----><!--]--><ul class="sidebar-links"><li><!--[--><a href="/" class="nav-link sidebar-link sidebar-page" aria-label="主页"><span class="font-icon icon iconfont icon-home" style=""></span>主页<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><section class="sidebar-group"><p class="sidebar-heading active"><span class="font-icon icon iconfont icon-note" style=""></span><span class="title">文章</span><!----></p><ul class="sidebar-links"><li><section class="sidebar-group"><button class="sidebar-heading clickable"><!----><span class="title">后端</span><span class="arrow end"></span></button><!----></section></li><li><section class="sidebar-group"><button class="sidebar-heading clickable"><!----><span class="title">基础</span><span class="arrow end"></span></button><!----></section></li><li><section class="sidebar-group"><button class="sidebar-heading clickable"><!----><span class="title">前端</span><span class="arrow end"></span></button><!----></section></li><li><section class="sidebar-group"><button class="sidebar-heading clickable active"><!----><span class="title">算法</span><span class="arrow down"></span></button><ul class="sidebar-links"><li><section class="sidebar-group"><button class="sidebar-heading clickable active"><!----><span class="title">算法基础</span><span class="arrow down"></span></button><ul class="sidebar-links"><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%B9%B6%E6%9F%A5%E9%9B%86.html" class="nav-link sidebar-link sidebar-page" aria-label="并查集"><!---->并查集<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%B7%AE%E5%88%86.html" class="nav-link sidebar-link sidebar-page" aria-label="差分"><!---->差分<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%92%8C%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0.html" class="nav-link sidebar-link sidebar-page" aria-label="单链表和双链表的数组实现"><!---->单链表和双链表的数组实现<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%A0%86%E3%80%81%E5%93%88%E5%B8%8C.html" class="nav-link sidebar-link sidebar-page" aria-label="堆和哈希"><!---->堆和哈希<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E4%BA%8C%E5%88%86%E9%97%AE%E9%A2%98.html" class="nav-link sidebar-link sidebar-page" aria-label="二分"><!---->二分<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.html" class="nav-link sidebar-link sidebar-page" aria-label="归并排序"><!---->归并排序<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.html" class="nav-link sidebar-link sidebar-page" aria-label="快速排序"><!---->快速排序<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%BC%80%E5%92%8C.html" class="nav-link sidebar-link sidebar-page" aria-label="前缀和"><!---->前缀和<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%A0%91%E3%80%81%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E5%92%8C%E9%81%8D%E5%8E%86.html" class="nav-link sidebar-link sidebar-page" aria-label="树和图的存储及遍历"><!---->树和图的存储及遍历<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%8F%8C%E6%8C%87%E9%92%88.html" class="nav-link sidebar-link sidebar-page" aria-label="双指针"><!---->双指针<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html" class="router-link-active router-link-exact-active nav-link active sidebar-link sidebar-page active" aria-label="图相关的基本算法"><!---->图相关的基本算法<!----></a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-单源最短路" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="1. 单源最短路"><!---->1. 单源最短路<!----></a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-1-dijkstra算法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="1.1 Dijkstra算法"><!---->1.1 Dijkstra算法<!----></a><ul class="sidebar-sub-headers"></ul></li><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-2-bellman-ford算法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="1.2  Bellman-Ford算法"><!---->1.2  Bellman-Ford算法<!----></a><ul class="sidebar-sub-headers"></ul></li><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-3-spfa算法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="1.3 SPFA算法"><!---->1.3 SPFA算法<!----></a><ul class="sidebar-sub-headers"></ul></li></ul></li><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_2-多源最短路" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="2. 多源最短路"><!---->2. 多源最短路<!----></a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_2-1-floyd算法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="2.1 Floyd算法"><!---->2.1 Floyd算法<!----></a><ul class="sidebar-sub-headers"></ul></li></ul></li><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-prim-算法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="1. prim 算法"><!---->1. prim 算法<!----></a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-1-1-朴素版prim算法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="1.1.1 朴素版prim算法"><!---->1.1.1 朴素版prim算法<!----></a><ul class="sidebar-sub-headers"></ul></li><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-1-2-堆优化版prim算法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="1.1.2 堆优化版prim算法"><!---->1.1.2 堆优化版prim算法<!----></a><ul class="sidebar-sub-headers"></ul></li></ul></li><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_2-kruskal-算法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="2. Kruskal 算法"><!---->2. Kruskal 算法<!----></a><ul class="sidebar-sub-headers"></ul></li><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-染色法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="1. 染色法"><!---->1. 染色法<!----></a><ul class="sidebar-sub-headers"></ul></li><li class="sidebar-sub-header"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_2-匈牙利算法" class="router-link-active router-link-exact-active nav-link sidebar-link heading" aria-label="2. 匈牙利算法"><!---->2. 匈牙利算法<!----></a><ul class="sidebar-sub-headers"></ul></li></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%81%E7%A6%BB%E6%95%A3%E5%8C%96%E3%80%81%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6.html" class="nav-link sidebar-link sidebar-page" aria-label="位运算、离散化、区间合并"><!---->位运算、离散化、区间合并<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97.html" class="nav-link sidebar-link sidebar-page" aria-label="栈和队列"><!---->栈和队列<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/DFS%E3%80%81BFS.html" class="nav-link sidebar-link sidebar-page" aria-label="DFS、BFS"><!---->DFS、BFS<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/KMP%E3%80%81Trie.html" class="nav-link sidebar-link sidebar-page" aria-label="KMP、Trie"><!---->KMP、Trie<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><section class="sidebar-group"><button class="sidebar-heading clickable"><!----><span class="title">Dp</span><span class="arrow end"></span></button><!----></section></li></ul></section></li></ul></section></li></ul></section></li><li><section class="sidebar-group"><p class="sidebar-heading"><span class="font-icon icon iconfont icon-question" style=""></span><span class="title">学习中的疑问</span><!----></p><ul class="sidebar-links"><li><!--[--><a href="/question/csapp.html" class="nav-link sidebar-link sidebar-page" aria-label="csapp学习中的问题"><!---->csapp学习中的问题<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li></ul></section></li><li><section class="sidebar-group"><p class="sidebar-heading"><span class="font-icon icon iconfont icon-list" style=""></span><span class="title">资源</span><!----></p><ul class="sidebar-links"><li><!--[--><a href="/source/%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B.html" class="nav-link sidebar-link sidebar-page" aria-label="基础课程"><!---->基础课程<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li><li><!--[--><a href="/source/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF.html" class="nav-link sidebar-link sidebar-page" aria-label="算法模板"><!---->算法模板<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li></ul></section></li><li><!--[--><a href="/intro.html" class="nav-link sidebar-link sidebar-page" aria-label="介绍页"><span class="font-icon icon iconfont icon-info" style=""></span>介绍页<!----></a><ul class="sidebar-sub-headers"></ul><!--]--></li></ul><!--[--><!----><!--]--></aside><!--[--><main class="page" id="main-content"><!--[--><!----><nav class="breadcrumb disable"></nav><div class="page-title"><h1><!---->图相关的基本算法</h1><div class="page-info"><span class="page-author-info" aria-label="作者🖊" data-balloon-pos="down"><svg xmlns="http://www.w3.org/2000/svg" class="icon author-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="author icon"><path d="M649.6 633.6c86.4-48 147.2-144 147.2-249.6 0-160-128-288-288-288s-288 128-288 288c0 108.8 57.6 201.6 147.2 249.6-121.6 48-214.4 153.6-240 288-3.2 9.6 0 19.2 6.4 25.6 3.2 9.6 12.8 12.8 22.4 12.8h704c9.6 0 19.2-3.2 25.6-12.8 6.4-6.4 9.6-16 6.4-25.6-25.6-134.4-121.6-240-243.2-288z"></path></svg><span><span class="page-author-item">zzys</span></span><span property="author" content="zzys"></span></span><!----><span class="page-date-info" aria-label="写作日期📅" data-balloon-pos="down"><svg xmlns="http://www.w3.org/2000/svg" class="icon calendar-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="calendar icon"><path d="M716.4 110.137c0-18.753-14.72-33.473-33.472-33.473-18.753 0-33.473 14.72-33.473 33.473v33.473h66.993v-33.473zm-334.87 0c0-18.753-14.72-33.473-33.473-33.473s-33.52 14.72-33.52 33.473v33.473h66.993v-33.473zm468.81 33.52H716.4v100.465c0 18.753-14.72 33.473-33.472 33.473a33.145 33.145 0 01-33.473-33.473V143.657H381.53v100.465c0 18.753-14.72 33.473-33.473 33.473a33.145 33.145 0 01-33.473-33.473V143.657H180.6A134.314 134.314 0 0046.66 277.595v535.756A134.314 134.314 0 00180.6 947.289h669.74a134.36 134.36 0 00133.94-133.938V277.595a134.314 134.314 0 00-133.94-133.938zm33.473 267.877H147.126a33.145 33.145 0 01-33.473-33.473c0-18.752 14.72-33.473 33.473-33.473h736.687c18.752 0 33.472 14.72 33.472 33.473a33.145 33.145 0 01-33.472 33.473z"></path></svg><span><!----></span><meta property="datePublished" content="2023-02-11T00:00:00.000Z"></span><!----><span class="page-reading-time-info" aria-label="阅读时间⌛" data-balloon-pos="down"><svg xmlns="http://www.w3.org/2000/svg" class="icon timer-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="timer icon"><path d="M799.387 122.15c4.402-2.978 7.38-7.897 7.38-13.463v-1.165c0-8.933-7.38-16.312-16.312-16.312H256.33c-8.933 0-16.311 7.38-16.311 16.312v1.165c0 5.825 2.977 10.874 7.637 13.592 4.143 194.44 97.22 354.963 220.201 392.763-122.204 37.542-214.893 196.511-220.2 389.397-4.661 5.049-7.638 11.651-7.638 19.03v5.825h566.49v-5.825c0-7.379-2.849-13.981-7.509-18.9-5.049-193.016-97.867-351.985-220.2-389.527 123.24-37.67 216.446-198.453 220.588-392.892zM531.16 450.445v352.632c117.674 1.553 211.787 40.778 211.787 88.676H304.097c0-48.286 95.149-87.382 213.728-88.676V450.445c-93.077-3.107-167.901-81.297-167.901-177.093 0-8.803 6.99-15.793 15.793-15.793 8.803 0 15.794 6.99 15.794 15.793 0 80.261 63.69 145.635 142.01 145.635s142.011-65.374 142.011-145.635c0-8.803 6.99-15.793 15.794-15.793s15.793 6.99 15.793 15.793c0 95.019-73.789 172.82-165.96 177.093z"></path></svg><span>大约 11 分钟</span><meta property="timeRequired" content="PT11M"></span><span class="page-category-info" aria-label="分类🌈" data-balloon-pos="down"><svg xmlns="http://www.w3.org/2000/svg" class="icon category-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="category icon"><path d="M148.41 106.992h282.176c22.263 0 40.31 18.048 40.31 40.31V429.48c0 22.263-18.047 40.31-40.31 40.31H148.41c-22.263 0-40.311-18.047-40.311-40.31V147.302c0-22.263 18.048-40.31 40.311-40.31zM147.556 553.478H429.73c22.263 0 40.311 18.048 40.311 40.31v282.176c0 22.263-18.048 40.312-40.31 40.312H147.555c-22.263 0-40.311-18.049-40.311-40.312V593.79c0-22.263 18.048-40.311 40.31-40.311zM593.927 106.992h282.176c22.263 0 40.31 18.048 40.31 40.31V429.48c0 22.263-18.047 40.31-40.31 40.31H593.927c-22.263 0-40.311-18.047-40.311-40.31V147.302c0-22.263 18.048-40.31 40.31-40.31zM730.22 920.502H623.926c-40.925 0-74.22-33.388-74.22-74.425V623.992c0-41.038 33.387-74.424 74.425-74.424h222.085c41.038 0 74.424 33.226 74.424 74.067v114.233c0 10.244-8.304 18.548-18.547 18.548s-18.548-8.304-18.548-18.548V623.635c0-20.388-16.746-36.974-37.33-36.974H624.13c-20.585 0-37.331 16.747-37.331 37.33v222.086c0 20.585 16.654 37.331 37.126 37.331H730.22c10.243 0 18.547 8.304 18.547 18.547 0 10.244-8.304 18.547-18.547 18.547z"></path></svg><span class="page-category-item category8 clickable" role="navigation">笔记</span><meta property="articleSection" content="笔记"></span><span class="page-tag-info" aria-label="标签🏷" data-balloon-pos="down"><svg xmlns="http://www.w3.org/2000/svg" class="icon tag-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="tag icon"><path d="M939.902 458.563L910.17 144.567c-1.507-16.272-14.465-29.13-30.737-30.737L565.438 84.098h-.402c-3.215 0-5.726 1.005-7.634 2.913l-470.39 470.39a10.004 10.004 0 000 14.164l365.423 365.424c1.909 1.908 4.42 2.913 7.132 2.913s5.223-1.005 7.132-2.913l470.39-470.39c2.01-2.11 3.014-5.023 2.813-8.036zm-240.067-72.121c-35.458 0-64.286-28.828-64.286-64.286s28.828-64.285 64.286-64.285 64.286 28.828 64.286 64.285-28.829 64.286-64.286 64.286z"></path></svg><span class="page-tag-item tag2 clickable" role="navigation">图</span><span class="page-tag-item tag4 clickable" role="navigation">最短路</span><span class="page-tag-item tag5 clickable" role="navigation">最小生成树</span><span class="page-tag-item tag4 clickable" role="navigation">二分图</span><meta property="keywords" content="图,最短路,最小生成树,二分图"></span></div><hr></div><div class="toc-place-holder"><aside id="toc"><div class="toc-header">此页内容<button class="print-button" title="print"><svg xmlns="http://www.w3.org/2000/svg" class="icon print-icon" viewBox="0 0 1024 1024" fill="currentColor" aria-label="print icon"><path d="M819.2 364.8h-44.8V128c0-17.067-14.933-32-32-32H281.6c-17.067 0-32 14.933-32 32v236.8h-44.8C145.067 364.8 96 413.867 96 473.6v192c0 59.733 49.067 108.8 108.8 108.8h44.8V896c0 17.067 14.933 32 32 32h460.8c17.067 0 32-14.933 32-32V774.4h44.8c59.733 0 108.8-49.067 108.8-108.8v-192c0-59.733-49.067-108.8-108.8-108.8zM313.6 160h396.8v204.8H313.6V160zm396.8 704H313.6V620.8h396.8V864zM864 665.6c0 25.6-19.2 44.8-44.8 44.8h-44.8V588.8c0-17.067-14.933-32-32-32H281.6c-17.067 0-32 14.933-32 32v121.6h-44.8c-25.6 0-44.8-19.2-44.8-44.8v-192c0-25.6 19.2-44.8 44.8-44.8h614.4c25.6 0 44.8 19.2 44.8 44.8v192z"></path></svg></button></div><div class="toc-wrapper"><ul class="toc-list"><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-单源最短路" class="router-link-active router-link-exact-active toc-link level2">1. 单源最短路</a></li><ul class="toc-list"><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-1-dijkstra算法" class="router-link-active router-link-exact-active toc-link level3">1.1 Dijkstra算法</a></li><!----><!--]--><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-2-bellman-ford算法" class="router-link-active router-link-exact-active toc-link level3">1.2  Bellman-Ford算法</a></li><!----><!--]--><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-3-spfa算法" class="router-link-active router-link-exact-active toc-link level3">1.3 SPFA算法</a></li><!----><!--]--></ul><!--]--><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_2-多源最短路" class="router-link-active router-link-exact-active toc-link level2">2. 多源最短路</a></li><ul class="toc-list"><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_2-1-floyd算法" class="router-link-active router-link-exact-active toc-link level3">2.1 Floyd算法</a></li><!----><!--]--></ul><!--]--><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-prim-算法" class="router-link-active router-link-exact-active toc-link level2">1. prim 算法</a></li><ul class="toc-list"><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-1-1-朴素版prim算法" class="router-link-active router-link-exact-active toc-link level3">1.1.1 朴素版prim算法</a></li><!----><!--]--><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-1-2-堆优化版prim算法" class="router-link-active router-link-exact-active toc-link level3">1.1.2 堆优化版prim算法</a></li><!----><!--]--></ul><!--]--><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_2-kruskal-算法" class="router-link-active router-link-exact-active toc-link level2">2. Kruskal 算法</a></li><!----><!--]--><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_1-染色法" class="router-link-active router-link-exact-active toc-link level2">1. 染色法</a></li><!----><!--]--><!--[--><li class="toc-item"><a aria-current="page" href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95.html#_2-匈牙利算法" class="router-link-active router-link-exact-active toc-link level2">2. 匈牙利算法</a></li><!----><!--]--></ul></div></aside></div><!----><div class="theme-hope-content"><p>有关图的算法，包括最短路，最小生成树，二分图</p><!-- more --><figure><img src="http://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/e47ce8d5e2a4321c42eeb251da54e3b9.png" alt="最短路.drawio.png" tabindex="0" loading="lazy"><figcaption>最短路.drawio.png</figcaption></figure><h1 id="最短路" tabindex="-1"><a class="header-anchor" href="#最短路" aria-hidden="true">#</a> 最短路</h1><h2 id="_1-单源最短路" tabindex="-1"><a class="header-anchor" href="#_1-单源最短路" aria-hidden="true">#</a> 1. 单源最短路</h2><h3 id="_1-1-dijkstra算法" tabindex="-1"><a class="header-anchor" href="#_1-1-dijkstra算法" aria-hidden="true">#</a> 1.1 Dijkstra算法</h3><p>对于没有负权边的单源最短路问题，通常使用Dijkstra算法解决，其中当图是稀疏图时，考虑使用堆优化版的Dijkstra算法，稠密图使用朴素版的Dijkstra算法</p><h4 id="_1-1-1-朴素版的dijkstra算法" tabindex="-1"><a class="header-anchor" href="#_1-1-1-朴素版的dijkstra算法" aria-hidden="true">#</a> 1.1.1 朴素版的Dijkstra算法</h4><ol><li>初始化起点为0，其他点为正无穷，定义<code>s数组</code>为已经确定最短路的点</li><li>循环n次，每次选取不在集合<code>s</code>中，距离起点最近的点<code>t</code>，加入集合<code>s</code>中，更新其他点的最短路径</li></ol><p>常用模板：</p><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,l,r) for (int i = (l); i &lt; (r); ++ i)
+#define per(i,r,l) for (int i = (r); i &gt; (l); -- i)
+typedef long long LL;
+
+using namespace  std;
+const int N = 1e3 + 10;
+int n, m;
+int g[N][N], dist[N];
+bool st[N];
+
+int Dijkstra()
+{
+    memset(dist,0x3f,sizeof dist);
+    // 初始化第一个点的距离为0
+    dist[1] = 0;
+    
+    rep(i,1,n + 1)
+    {
+        // st[]中为true的点的集合，就是已经确定最短距离的集合s
+        // 借助t从而选取不在s中，且距离最小的一个点加入s中
+        // 注意这里是以假设图中没有负权边为前提
+        int t = -1;
+        rep(j,1,n + 1)
+            if(!st[j] &amp;&amp; (t == -1 || dist[t] &gt; dist[j])) t = j;
+        
+        // 将该点加入s中
+        st[t] = true;
+        
+        if(t == n) break;
+        
+        // 更新其他点的最短路径
+        rep(j,1,n + 1)
+            dist[j] = min(dist[t] + g[t][j], dist[j]);
+        
+    }
+    if(dist[n] == 0x3f3f3f3f) return -1;
+    return dist[n];
+}
+
+int main()
+{
+    memset(g,0x3f,sizeof g);
+    cin &gt;&gt; n &gt;&gt; m;
+    
+    rep(i,1,m + 1)
+    {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        // 处理重边
+        g[a][b] = min(g[a][b], c);
+    }
+    
+    cout &lt;&lt; Dijkstra();
+    
+    return 0;
+}
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_1-1-2-堆优化的dijkstra算法" tabindex="-1"><a class="header-anchor" href="#_1-1-2-堆优化的dijkstra算法" aria-hidden="true">#</a> 1.1.2 堆优化的Dijkstra算法</h4><ol><li><p>朴素版中最耗时的操作是以下两步</p><ol><li>在未确定最短距离的集合中寻找最小值</li><li>用新选出的点更新其他的边</li></ol></li><li><p>无论图是稠密图还是稀疏图，都要遍历n边，但是可以考虑一下稀疏图，他的出边实际上并没有n那么多，所以首先可以考虑使用邻接表来存储，这样遍历更新的次数会减少</p></li><li><p>对于寻找最小值，可以考虑使用优先队列来进行维护寻找</p></li></ol><p>由于对于一个点，队列不支持原地修改，所以可能在队列中存在多个边，所以要使用st数组维护状态</p><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,l,r) for (int i = (l); i &lt; (r); ++ i)
+#define per(i,r,l) for (int i = (r); i &gt; (l); -- i)
+typedef long long LL;
+
+using namespace  std;
+typedef pair&lt;int,int&gt; PII;
+const int N = 1e6 + 10;
+int n, m;
+int e[N], ne[N], w[N], h[N], dist[N], idx;
+bool st[N];
+
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++; 
+}
+
+int Dijkstra()
+{
+    memset(dist,0x3f,sizeof dist);
+    // 初始化第一个点的距离为0
+    dist[1] = 0;
+    priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt;&gt; heap;
+    
+    heap.push({0,1});
+    
+    
+    while(heap.size())
+    {
+        auto t = heap.top();
+        int dis = t.first , ver = t.second;
+        heap.pop();
+        if(st[ver]) continue;
+        st[ver] = true;
+        
+        for(int i = h[ver]; i != -1; i = ne[i])
+        {
+            int j = e[i];
+            if(dist[j] &gt; dis + w[i])
+            {
+                dist[j] = dis + w[i];
+                heap.push({dist[j],j});
+            }
+            
+        }
+    }
+    
+    if(dist[n] == 0x3f3f3f3f) return -1;
+    return dist[n];
+}
+
+int main()
+{
+    memset(h,-1,sizeof h);
+    cin &gt;&gt; n &gt;&gt; m;
+    
+    rep(i,1,m + 1)
+    {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        add(a,b,c);
+    }
+    
+    cout &lt;&lt; Dijkstra();
+    
+    return 0;
+}
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_1-2-bellman-ford算法" tabindex="-1"><a class="header-anchor" href="#_1-2-bellman-ford算法" aria-hidden="true">#</a> 1.2 Bellman-Ford算法</h3><p>当存在负权边时，不能使用Dijsktra算法，选择采用Bellman-Ford算法。</p><p>这个算法的思想是：循环n遍，循环内部遍历m条边（a,b,w），计算<code>dist[b] = min(dist[b],dist[a] + w)</code>。其中n的含义是，最多经过n条边选取的最短路径。</p><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,l,r) for (int i = (l); i &lt;= (r); ++ i)
+#define per(i,r,l) for (int i = (r); i &gt; (l); -- i)
+typedef long long LL;
+
+using namespace  std;
+typedef pair&lt;int,int&gt; PII;
+const int N = 1e4;
+const int M = 1e5 + 10;
+int n, m, k, idx;
+int dist[N],backup[N];
+int e[N], ne[N], h[N], w[N];
+
+int add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
+}
+
+void bf()
+{
+    memset(dist, 0x3f, sizeof dist);
+ 
+    dist[1] = 0;
+    
+    rep(i, 1, k)
+    {
+        memcpy(backup, dist, sizeof dist);
+        rep(i, 1, n)
+        {
+            for(int j = h[i]; j != -1; j = ne[j])
+            {
+                int t = e[j];
+                //  注意使用备份数组防止串联修改
+                dist[t] = min(dist[t], backup[i] + w[j]);
+            }
+        }
+    }
+}
+
+int main()
+{
+    memset(h, -1, sizeof h);
+    
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    
+    rep(i, 1, m)
+    {
+        int x, y, z;
+        cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;
+        add(x,y,z);
+    }
+    bf();
+    if (dist[n] &gt; 0x3f3f3f3f / 2) cout &lt;&lt; &quot;impossible&quot;;
+    else cout &lt;&lt; dist[n];
+    
+    return 0;
+}
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>backup数组的含义： <img src="http://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/7d063fa16dad706139cb69d617a9e409.png" alt="backup.png" loading="lazy"></p><ul><li><p>如果不使用backup：在第一次遍历，也是唯一一次遍历时：原本b的距离是正无穷，c的距离也是正无穷，在遍历所有边时，先将b更新为1，再更新c时，就会将b更新为2，但这很显然超出了预期。</p></li><li><p>如果使用backup，每一次更新都使用backup的数据，虽然先将b更新为1，但是backup中b的距离依然是正无穷，这样就符合我们的预期。</p></li></ul><p>对于这个判断条件<code>dist[n] &gt; 0x3f3f3f3f / 2</code>，是因为对于n和n-1两个点，如果起点无法到达，那么它们两个的dist就是正无穷，但是一旦这两个之间的距离为负数，就有可能将n的dist更新的比0x3f3f3f3f要小，所以就去一个保险值。</p><h3 id="_1-3-spfa算法" tabindex="-1"><a class="header-anchor" href="#_1-3-spfa算法" aria-hidden="true">#</a> 1.3 SPFA算法</h3><p>SPFA是bellman-frod算法的改进版，可以发现，<code>dist[t] = min(dist[t], backup[i] + w[j]);</code>这一步并不是每一次都真的进行更新操作，只有在i点的距离发生变小后，才会更新t的距离。</p><p>所以可以采用宽搜的思想，当我们将一个点的距离更新后，就将其放入队列中，更新它的所有出边。当队列为空时，也就没有可以更新的点了。</p><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,l,r) for (int i = (l); i &lt;= (r); ++ i)
+#define per(i,r,l) for (int i = (r); i &gt; (l); -- i)
+typedef long long LL;
+
+using namespace  std;
+typedef pair&lt;int,int&gt; PII;
+const int N = 1e5 + 10;
+int e[N], ne[N], h[N], w[N];
+int n, m, idx;
+int dist[N];
+bool st[N];
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++;
+}
+
+void spfa()
+{
+    memset(dist,0x3f,sizeof dist);
+    
+    dist[1] = 0;
+    
+    queue&lt;int&gt; q;
+    q.push(1);
+    st[1] = true;
+    while(q.size())
+    {
+        int t = q.front();
+        st[t] = false;
+        q.pop();
+        
+        for(int i = h[t]; i != -1; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] &gt; dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                if (!st[j])
+                {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    memset(h, -1, sizeof h);
+    cin &gt;&gt; n &gt;&gt; m;
+    
+    rep(i, 1, m)
+    {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        add(a, b, c);
+    }
+    
+    spfa();
+    if(dist[n] == 0x3f3f3f3f) cout &lt;&lt; &quot;impossible&quot;;
+    else cout &lt;&lt; dist[n];
+    return 0;
+}
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>可以利用SPFA来求图中是否存在负环：每当一条边更新一遍时，它所经历的边数就是更新它的点的边数加一，如果这个数字大于等于点数，那么就存在一个环，由于此算法是求最短路，所以该环就是负环。</p><p>注意负环有可能从起点无法到达，所以将所有点都放入SPFA中进行计算</p><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;//spfa求负环 
+using namespace std;
+typedef long long LL;
+typedef pair&lt;int,int&gt; PII;
+const int N=1e6;
+int n,m;
+int d[N],h[N],e[N],ne[N],w[N],idx,cnt[N];
+bool st[N];
+
+void add(int a,int b,int c)
+{
+    e[idx]=b,w[idx]=c,ne[idx]=h[a],h[a]=idx++;
+}
+
+bool spfa()
+{
+    queue&lt;int&gt; a;
+    for(int i=1;i&lt;=n;i++)//将所有点入队
+    {
+        a.push(i);
+        st[i]=true;
+    }
+    while(a.size())
+    {
+        int t=a.front();
+        a.pop();
+        st[t]=false;
+        
+        for(int i=h[t];i!=-1;i=ne[i])
+        {
+            int j=e[i];
+            if(d[j]&gt;d[t]+w[i])
+            {
+                d[j]=d[t]+w[i];
+                cnt[j]=cnt[t]+1;//每次成功更新，都让其经过的边数等于与上一个点加一，
+                if(cnt[j]&gt;=n) return true;//如果说经过的变数大于总点数 ，那么一定有重复点，也就是存在环
+                if(!st[j])
+                {
+                    st[j]=true;
+                    a.push(j);
+                }
+            }
+        }
+    };
+    return false
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin&gt;&gt;n&gt;&gt;m;
+    memset(h,-1,sizeof h);
+    for(int i=0;i&lt;m;i++)
+    {
+        int a,b,c;
+        cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
+        add(a,b,c);
+    }
+    if(spfa()) cout&lt;&lt;&quot;Yes&quot;;
+    else cout&lt;&lt;&quot;No&quot;;
+    return 0;
+}
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_2-多源最短路" tabindex="-1"><a class="header-anchor" href="#_2-多源最短路" aria-hidden="true">#</a> 2. 多源最短路</h2><h3 id="_2-1-floyd算法" tabindex="-1"><a class="header-anchor" href="#_2-1-floyd算法" aria-hidden="true">#</a> 2.1 Floyd算法</h3><p>Floyd基于动态规划，用于求解多源最短路</p><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,l,r) for (int i = (l); i &lt;= (r); ++ i)
+#define per(i,r,l) for (int i = (r); i &gt; (l); -- i)
+typedef long long LL;
+
+using namespace  std;
+const int N=3e2;
+const int INF = 1e9;
+int n, m, k;
+int g[N][N];
+
+
+void floyd()
+{
+    rep(k, 1, n)
+        rep(i, 1, n)
+            rep(j, 1, n)
+                g[i][j] = min(g[i][j] , g[i][k] + g[k][j]);
+}
+
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    
+    rep(i,1,n)
+    {
+        rep(j, 1, n)
+        {
+            if (i == j) g[i][j] = 0;
+            else g[i][j] = INF;
+        }
+    }
+    rep(i, 1, m)
+    {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        g[a][b] = min(g[a][b], c);
+    }
+    floyd();
+    
+    while(k --)
+    {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        if (g[a][b] &gt; INF / 2) cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+        else cout &lt;&lt; g[a][b] &lt;&lt; endl;
+    }
+    
+    return 0;
+}
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h1 id="最小生成树" tabindex="-1"><a class="header-anchor" href="#最小生成树" aria-hidden="true">#</a> 最小生成树</h1><p>一般来说稠密图使用朴素版的prim算法，稀疏图堆优化版的prim算法和Kruskal算法都可以用，由于Kruskal较短，所以优先使用Kruskal。</p><h2 id="_1-prim-算法" tabindex="-1"><a class="header-anchor" href="#_1-prim-算法" aria-hidden="true">#</a> 1. prim 算法</h2><h3 id="_1-1-1-朴素版prim算法" tabindex="-1"><a class="header-anchor" href="#_1-1-1-朴素版prim算法" aria-hidden="true">#</a> 1.1.1 朴素版prim算法</h3><p>时间复杂度：O(n^2)</p><p>和Dijkstra思路相似，只不过dist数组维护的是点到集合的最短距离</p><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,l,r) for (int i = (l); i &lt;= (r); ++ i)
+#define per(i,r,l) for (int i = (r); i &gt; (l); -- i)
+typedef long long LL;
+
+using namespace  std;
+typedef pair&lt;int,int&gt; PII;
+const int N = 510;
+const int INF = 0x3f3f3f3f;
+int n, m;
+int g[N][N],dist[N];
+bool st[N];
+
+int prim()
+{
+    int ans = 0;
+    memset(dist,INF,sizeof dist);
+    dist[1] = 0;
+    rep(i, 1, n)
+    {
+        int t = -1;
+        rep(j, 1, n)
+            if (!st[j] &amp;&amp; (t == -1 || dist[j] &lt; dist[t])) t = j;
+            
+        if (dist[t] == INF) return INF;
+        ans += dist[t];
+        st[t] = true;
+        
+        rep(j,1,n)
+            dist[j] = min(dist[j] ,g[t][j]);
+    }
+    return ans;
+}
+
+
+int main()
+{
+    memset(g,INF,sizeof g);
+    cin &gt;&gt; n &gt;&gt; m;
+    while (m -- )
+    {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        g[a][b] = g[b][a] = min(g[a][b], c);
+    }
+    int t = prim();
+    if (t == INF) cout &lt;&lt;&quot;impossible&quot; &lt;&lt; endl;
+    else cout &lt;&lt; t &lt;&lt; endl;
+    
+    return 0;
+}
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_1-1-2-堆优化版prim算法" tabindex="-1"><a class="header-anchor" href="#_1-1-2-堆优化版prim算法" aria-hidden="true">#</a> 1.1.2 堆优化版prim算法</h3><p>时间复杂度：O(mlogn)</p><h2 id="_2-kruskal-算法" tabindex="-1"><a class="header-anchor" href="#_2-kruskal-算法" aria-hidden="true">#</a> 2. Kruskal 算法</h2><p>时间复杂度：O(mlogm)</p><ol><li>将所有边按权重从小到大排序（快速排序）</li><li>枚举每条边a，b 权重c。如果a，b不连通，将这条边加入集合中（并查集维护）</li></ol><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,l,r) for (int i = (l); i &lt;= (r); ++ i)
+#define per(i,r,l) for (int i = (r); i &gt; (l); -- i)
+typedef long long LL;
+
+using namespace  std;
+typedef pair&lt;int,int&gt; PII;
+const int M = 2e5 + 10;
+int n, m;
+int p[M];
+struct Edge
+{
+    int a, b, w;
+}edge[M];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+bool cmp(Edge a, Edge b)
+{
+    return a.w &lt; b.w;
+}
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; m;
+    rep(i, 1, n) p[i] = i;
+    rep(i, 1, m)
+    {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        edge[i] = {a, b, c};
+    }
+    
+    sort(edge + 1, edge + m + 1, cmp);
+    int res = 0, cnt = 0;
+    
+    rep(i, 1, m)
+    {
+        int a = edge[i].a, b = edge[i].b, w = edge[i].w;
+        a = find(a), b = find(b);
+        if(a != b)
+        {
+            p[a] = b;
+            res += w;
+            cnt ++;
+        }
+    }
+    if (cnt &lt; n - 1) cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+    else cout &lt;&lt; res;
+    return 0;
+}
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h1 id="二分图" tabindex="-1"><a class="header-anchor" href="#二分图" aria-hidden="true">#</a> 二分图</h1><p>一个图是二分图当且仅当图中不含奇数环（边数）</p><h2 id="_1-染色法" tabindex="-1"><a class="header-anchor" href="#_1-染色法" aria-hidden="true">#</a> 1. 染色法</h2><p>时间复杂度：O(n+m)</p><p>染色法用来判断一个图是否是二分图，从起点开始，将起点染成1，然后把所有相邻的点染成2，依次类推，如果发现有相邻的点颜色相同，那么就说明存在奇数环，不是二分图。</p><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,l,r) for (int i = (l); i &lt;= (r); ++ i)
+#define per(i,r,l) for (int i = (r); i &gt; (l); -- i)
+typedef long long LL;
+
+using namespace  std;
+typedef pair&lt;int,int&gt; PII;
+const int N = 2e5 + 10;
+int n, m;
+int e[N], ne[N], h[N], idx;
+int c[N];
+void add(int a, int b)
+{
+    e[idx] = b,  ne[idx] = h[a] , h[a] = idx ++;
+}
+
+
+bool dfs(int u, int color)
+{
+    c[u] = color;
+    
+    for(int i = h[u]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        
+        if(!c[j])
+        {
+            if(!dfs(j,3 - color)) return false;
+        }
+        else if(c[j] == color) return false;
+    }
+    return true;
+}
+
+int main()
+{
+    memset(h, -1, sizeof h);
+    cin &gt;&gt; n &gt;&gt; m;
+    rep(i, 1, m)
+    {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        add(a, b);
+        add(b, a);
+    }
+    bool f = true;
+    rep(i, 1, n)
+    {
+        if (!c[i])
+        {
+            if (!dfs(i,1))
+            {
+                f = false;
+                break;
+            }
+        }
+    }
+    if (!f) cout &lt;&lt; &quot;No&quot;;
+    else cout &lt;&lt; &quot;Yes&quot;;
+    return 0;
+}
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_2-匈牙利算法" tabindex="-1"><a class="header-anchor" href="#_2-匈牙利算法" aria-hidden="true">#</a> 2. 匈牙利算法</h2><p>时间复杂度：O(mn)，但实际运行时间远小于O(mn)</p><p>使用匈牙利算法来求一个给定的二分图的最大匹配值。</p><p>对于给定的一个二分图，将左半边称为男孩团体，右半边乘坐女孩团体，解题目的就是能最大数量组成情侣。其中如果两个异性存在一条边，则看作有好感度，可以尝试组成情侣，否则不予考虑。</p><p>遍历男生团体，对于其中一个男生，我们遍历所有和他有好感度的女生：</p><ol><li>当前女生还未匹配，则组成情侣</li><li>当前女生已经匹配，但是和她匹配的男生还可以找到新的女生（递归进行1，2）</li><li>遍历过了所有女生都无法匹配，则放弃</li></ol><p>在代码中math数组用来维护男女的匹配情况。st数组用来维护在每一个男生寻找匹配时，女生被匹配的状态，保证递归寻找不要去寻找重复的匹配，否则会陷入死循环</p><div class="language-c++ line-numbers-mode" data-ext="c++"><pre class="language-c++"><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,l,r) for (int i = (l); i &lt;= (r); ++ i)
+#define per(i,r,l) for (int i = (r); i &gt; (l); -- i)
+typedef long long LL;
+
+using namespace  std;
+typedef pair&lt;int,int&gt; PII;
+const int N = 5e2 + 10;
+const int M = 1e5 + 10;
+int e[M], ne[M], h[N], idx;
+int n1, n2, m;
+bool st[N];
+int math[N];
+
+void add(int a, int b)
+{
+    e[idx] = b,  ne[idx] = h[a] , h[a] = idx ++;
+}
+
+bool find(int u)
+{
+    for(int i = h[u] ; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        
+        if (!st[j])
+        {
+            st[j] = true;
+            if (math[j] == 0 || find(math[j]))
+            {
+                math[j] = u;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int main()
+{
+    memset(h, -1, sizeof h);
+
+    cin &gt;&gt; n1 &gt;&gt; n2 &gt;&gt; m;
+    
+    while (m -- )
+    {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        add(a, b);
+    }
+    int res = 0;
+    rep(i,1,n1)
+    {
+        memset(st,false,sizeof st);
+        if(find(i)) res ++;
+    }
+    cout &lt;&lt; res;
+    return 0;
+}
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div><!----><footer class="page-meta"><!----><div class="meta-item git-info"><!----><!----></div></footer><nav class="page-nav"><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%8F%8C%E6%8C%87%E9%92%88.html" class="nav-link prev" aria-label="双指针"><div class="hint"><span class="arrow start"></span>上一页</div><div class="link"><!---->双指针</div></a><a href="/note/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%81%E7%A6%BB%E6%95%A3%E5%8C%96%E3%80%81%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6.html" class="nav-link next" aria-label="位运算、离散化、区间合并"><div class="hint">下一页<span class="arrow end"></span></div><div class="link">位运算、离散化、区间合并<!----></div></a></nav><!----><!----><!--]--></main><!--]--><footer class="footer-wrapper"><div class="footer">MIT Licensed | Copyright © 2023-present zzys</div><!----></footer></div><!--]--><!--]--><!----><!----><!--]--></div>
+    <script type="module" src="/assets/app-91e7e107.js" defer></script>
+  </body>
+</html>
