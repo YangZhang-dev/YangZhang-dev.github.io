@@ -258,7 +258,7 @@ RMSProp + momentum + warm up
 
 对于一个batch内的数据，做标准化，可以在任何一层加入BN层：
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250215201727481.png" alt="image-20250215201727481" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/198350c5b52867173cb3cebf2f626648.png" alt="image-20250215201727481" style="zoom:50%;" />
 
 在test或inference中，往往不能立即获得一个batch的数据，常常使用moving average来获得均值和标准差，如：
 
@@ -487,7 +487,7 @@ dot product：两个向量分别乘以$W^{q}\space W^{k}$得出`q k`向量，然
 
 ## 多头注意力
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250215122145461.png" alt="image-20250215122145461" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/9be6e4eab558334521f6ca7d78321693.png" alt="image-20250215122145461" style="zoom:50%;" />
 
 在单头注意力的基础上，采用多个独立无关的权重矩阵完成多个方向的注意力计算。
 
@@ -501,7 +501,7 @@ dot product：两个向量分别乘以$W^{q}\space W^{k}$得出`q k`向量，然
 >
 > 投影到子空间本质上是一种 **特征解耦** 技术，让模型能并行地从不同角度分析信息，类似人类多任务协同的工作方式。
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250215122529720.png" alt="image-20250215122529720" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/1c702abc07d88dffdba3a780d4844e51.png" alt="image-20250215122529720" style="zoom:50%;" />
 
 然后乘上权重矩阵$W^o$，将多个注意力计算的结果整合。
 
@@ -587,7 +587,7 @@ FP，TP，BF
 
 int8适用于推理
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250311113747962.png" alt="image-20250311113747962" style="zoom: 67%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/9c2da7abce4e3ec9e606546601edfec6.png" alt="image-20250311113747962" style="zoom: 67%;" />
 
 e代表指数位数，m代表精度位数。
 
@@ -622,7 +622,7 @@ https://www.bilibili.com/video/BV12s421u7sZ?t=4453.5
 
 **AR模型**，一个token一个token的进行推理，循环输入。
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250215210532050.png" alt="image-20250215210532050" style="zoom: 67%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/d69802b74a68e9faa4311d8fc2672bed.png" alt="image-20250215210532050" style="zoom: 67%;" />
 
 transformer由左边N个无关的encoder和右边N个无关的decoder组成。
 
@@ -634,7 +634,7 @@ transformer由左边N个无关的encoder和右边N个无关的decoder组成。
 
 encoder具体细节如下图：
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250215210926802.png" alt="image-20250215210926802" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/7acd5dcb195e86887929fc71f06725d4.png" alt="image-20250215210926802" style="zoom:50%;" />
 
 首先对输入向量做self-attention，然后进行一步残差连接和层归一化（区别于BN）处理，之后放入一个前馈神经网络（FFN），之后在进行一个残差连接与层归一化（区别于BN是对一个batch内的一个维度做归一化，层归一化是对一个序列内做归一化）获得最终的encoder输出。
 
@@ -658,7 +658,7 @@ attention是通信，而MLP是映射
 
 transfomer是一种自回归的解码器，推理过程如下：
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250215222626219.png" alt="image-20250215222626219" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/ff4215e7bb57ca1019644c77ddb7a5a8.png" alt="image-20250215222626219" style="zoom:50%;" />
 
 整体来说，decoder接受来自encoder的输出和decoder以往的输出，通过softmax获取预测向量，输出最大概率的token。
 
@@ -694,13 +694,13 @@ bert是一种encoder-only的架构，是由transformer中的encoder堆叠而成�
 
 对输入采用masking input（special token，random mask token）随机mask一些input，使用`[MASK]`表示。让bert根据上下文信息预测mask的内容，类似于完形填空。
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250216121203158.png" alt="image-20250216121203158" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/97307ab6d0c004ebc47d0e15276511bb.png" alt="image-20250216121203158" style="zoom:50%;" />
 
 ### NSP
 
 给定两个句子，判断句子B是否是句子A的下一句，使用`[SEP]`分割句子。每个句子以`[CLS]`开头，其输出可用于分类任务的输出，同时也可用于下游任务(downstream-work)。
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250216122452962.png" alt="image-20250216122452962" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/0be20d64c6dd5d3c935d8f1c95d8c088.png" alt="image-20250216122452962" style="zoom:50%;" />
 
 ## 微调
 
@@ -708,11 +708,11 @@ bert是一种encoder-only的架构，是由transformer中的encoder堆叠而成�
 
 ### 情感分析
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250216122950859.png" alt="image-20250216122950859" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/df021eef0379f457eeb2f252d7786c02.png" alt="image-20250216122950859" style="zoom:50%;" />
 
 ### 词性标注
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250216123031807.png" alt="image-20250216123031807" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/5ce6da6e53d1924eb1ac31c93d783149.png" alt="image-20250216123031807" style="zoom:50%;" />
 
 ### 基于文本的问答
 
@@ -720,11 +720,11 @@ bert是一种encoder-only的架构，是由transformer中的encoder堆叠而成�
 
 输入`D Q`向量集合，输出两个数字，表示答案在文本的起始和中止的位置。
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250216123153309.png" alt="image-20250216123153309" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/593414e8508db877cc425652479d4eeb.png" alt="image-20250216123153309" style="zoom:50%;" />
 
 在训练过程中，还需要学习两个额外的向量，对于document输出的向量，分别和这两个向量做点积，分别获取获取两个概率最大的位置，即为结果。
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250216123334062.png" alt="image-20250216123334062" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/009b6d01d48ebab2123cf88fd3846069.png" alt="image-20250216123334062" style="zoom:50%;" />
 
 # RAG
 
@@ -1030,7 +1030,7 @@ $$
 
 ## 期望
 
-<img src="C:\Users\张扬\AppData\Roaming\Typora\typora-user-images\image-20250317222538657.png" alt="image-20250317222538657" style="zoom:50%;" />
+<img src="https://blog-zzys.oss-cn-beijing.aliyuncs.com/articles/69e611ee81a5eb343f6748de47ce806b.png" alt="image-20250317222538657" style="zoom:50%;" />
 
 ## 大数定理
 
