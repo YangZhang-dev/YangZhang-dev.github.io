@@ -47,7 +47,7 @@ printf("%d", x);
 
 
 
-## 预处理编译链接
+## 预处理
 
 预处理的本质是文本的粘贴替换
 
@@ -59,7 +59,7 @@ printf("%d", x);
 
 
 ```bash
-# 查看预处理后的文件
+# 在vim中查看预处理后的文件
 gcc -E f1.c | vim -
 # 查看预处理的详细信息，可用于查看 <> 系统头文件的查询顺序
 gcc -E --verbose f2.c > /dev/null
@@ -70,14 +70,43 @@ gcc -E --verbose f2.c > /dev/null
 1. 当前目录下
 2. `-I`参数：`gcc -I./include/ -c f.c`
 
-GCC编译链接：
+## 编译
+
+GCC编译，将源文件编译为汇编文件，并生成注释,`-o`参数用于重命名生成文件，：
+
+```bash
+gcc -S -fverbose-asm f1.c -o  f1.s
+```
+
+## 汇编
+
+通过`-c`参数将源文件编译为目标文件
+
 ```bash
 // 通过 -I 参数指定头文件扫描的目录
-gcc -c f1.c f2.c -I./include
-gcc f1.o f2.o -o f
+gcc -c f1.c f2.c -I./include -o f.o
+```
 
-// 直接编译为可执行文件
-gcc -c f.c -o f
+## 链接
+
+直接使用gcc即可链接
+
+```bash
+gcc f1.o f2.o -o f
+```
+
+## 常见GCC参数
+
+```bash
+// -g 生成调试信息，用于gdb以及objdump
+gcc a.c -g -o a
+```
+
+## 反汇编
+
+```bash
+// -S 用于生成代码和反汇编代码一一对应，需要原始编译加入-g参数
+objdump -S -d a.s
 ```
 
 ## 函数指针
@@ -109,7 +138,7 @@ int main() {
 
 ## 静态链接
 
-将多个`.o`文件归档为一个`.a`文件，链接器在链接时可以选择性的链接需要的符号。
+将多个`.o`文件归档为一个`.a`文件，链接器在链接时可以选择性的链接需要的符号。只需要给客户提供h文件和静态库而不需要提供c文件源码。
 
 ### 创建静态库
 
@@ -159,7 +188,21 @@ int main()
 gcc test.c -L. -lmyhello -o test
 ```
 
+### 链接静态库的一些问题
 
+在[练习30：自动化测试 · 笨办法学C](https://wizardforcel.gitbooks.io/lcthw/content/ex30.html)中，最后一步编译出现问题，原命令：
+
+`cc -g -O2 -Wall -Wextra -Isrc -rdynamic -DNDEBUG  build/list.a    tests/list_tests.c   -o tests/list_tests`
+
+其中`list.a`是提前编译好的静态库，这时会报`undefined reference to `的错误，这是因为静态库（例如 build/list.a）实际上是若干目标文件的集合。当链接器遇到一个静态库时，它只会提取那些满足**之前已发现但尚未定义的符号**的目标文件。
+
+链接器首先扫描了 `build/list.a`，此时还没有看到测试程序中对 `List_create` 等函数的调用，因此不会从静态库中提取目标文件。接下来扫描 `tests/list_tests.c` 编译成的目标文件时，链接器发现有很多未定义的符号，但它不会再回头查找库，因此报错。
+
+简单的解决办法：
+
+`cc -g -O2 -Wall -Wextra -Isrc -rdynamic -DNDEBUG tests/list_tests.c build/list.a -o tests/list_tests`
+
+所以说：链接阶段，静态库应该放在引用它们的目标文件（或编译后的文件）之后。这是因为链接器是按照从左到右的顺序处理命令行参数的，它在扫描目标文件时先记录下未定义的符号，然后在遇到静态库时，从中提取包含这些符号定义的目标文件以满足引用。
 
 ## 动态链接
 

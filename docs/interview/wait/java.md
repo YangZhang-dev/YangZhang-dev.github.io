@@ -30,10 +30,6 @@ tag:
 
 9.你的项目是如何做认证授权的，有用到token嘛
 
-10.Es中keyword和text的区别是什么
-
-11.Es中term和match的区别是什么
-
 12.SpringBoot中的事务用到什么注解
 
 13.自动装箱跟自动拆箱
@@ -145,16 +141,8 @@ https://www.nowcoder.com/feed/main/detail/4f792a25ce054c37be72d82f79cbc45b
 \4. Mysql的事务ACID什么意思
 \5. Mysql隔离级别有哪些
 \6. Mysql 有哪些log(查资料有redolog、binlog、undolog)
-\7. 聊聊ES，ES的基本概念
-\8. 为什么使用ES
-\9. ES的分词了解吗
-\10. 如果相查一个古代文字，怎么查找
-\11. ES搜索怎么优化
 \12. Redis了解吗，有哪几种数据结构？了解Zset吗
 \13. Redis为什么快
-\14. 消息队列了解吗(答Kafka)
-\15. partition在整体是有序的吗
-\16. 没有zookeeper的话，kafka运行会产生问题吗？有什么问题
 \17. 计算机网络问问把，7层网络模型有哪些
 \18. 常用的tcp和udp有什么区别(答：tcp面向连接，udp无连接，tcp有拥塞控制，udp没有，tcp适用于稳定的业务需求,udp适用于视频等场景，还有其他区别吗？没有)
 \19. 浏览器输入网址经历那些过程
@@ -369,7 +357,7 @@ java的一些八股
 手撕
 最长不重复子序列，力扣第三题
 
-ES的结构，游标索引，倒排索引
+
 二面主要结合很多实际场景，扩展你的项目!
 
 
@@ -413,8 +401,6 @@ Redis
 RocketMQ
  \1. Rocketmq有哪些特性？
  \2. 延迟队列你清楚吗？
-ES
- ES 和 MySQL 有什么区别？
 短链接项目
  \1. 长链变成短链的算法？
  \2. 数据库的主键ID你是怎么维护的？

@@ -29,3 +29,32 @@ clean:
 ## 复杂编译
 
 .PHONY修饰的目标就是只有规则没有依赖，每次都执行。
+
+## 符号
+
+`@`表示静默执行，不显示这条命令
+
+`$@`表示目标项，`$^`表示所有依赖文件。
+
+```makefile
+app: main.o utils.o
+	@gcc -o $@ $^
+```
+
+等价于`gcc -o app main.o utils.o`，且静默执行。
+
+## 内置函数
+
+### patsubst
+
+`$(patsubst %.c,%.o, a.c b.c)`
+
+把字串“a.c b.c”符合模式[%.c]的单词替换成[%.o]，返回结果是“a.o b.o”
+
+`OBJECTS=$(patsubst %.c,%.o,$(SOURCES))`生成源文件对应的目标文件名字。
+
+### addprefix
+
+`$(addprefix src/,foo bar)`
+
+返回值为`src/foo src/bar`。
