@@ -1054,7 +1054,7 @@ ANN
 
 假设模型预测概率分布 $q_i$ 与真实概率分布 $p_i$ 
 
-因为$p_i$即lable一般是独热编码，对于交叉熵的的公式：$loss = -\sum p_ilog(q_i)$可以简化为$-log(q_{正确类别})$
+因为$p_i$即lable一般是独热编码，对于交叉熵的的公式：$loss = -\sum p_ilog(q_i)$可以简化为$-log(q_{right\_class})$
 
 所以初始loss应该为$-ln(1/50257)$
 
