@@ -2077,7 +2077,7 @@ pop3，IMAP：拉取
 
 反射性XSS：将恶意脚本嵌入URL中，诱导受害者点击。
 
-http://baidu.com?message=<script>alert("xss")</script>
+`http://baidu.com?message=<script>alert("xss")</script>`
 
 存储型XSS：将恶意脚本存放到服务端，当受害者访问该页面时就会触发恶意脚本。论坛。
 

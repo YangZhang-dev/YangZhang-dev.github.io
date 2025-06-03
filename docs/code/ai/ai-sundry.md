@@ -210,11 +210,14 @@ $θ^{t+1}_{i} = θ^{t}_{i} - \alpha m_t$
 
 引入$\sigma$梯度的二阶矩的估计，二阶动量。稀疏数据场景下表现好；自适应调节学习率。
 
-$θ^{t+1}_{i} = θ^{t}_{i} - \frac{\alpha}{\sigma^{t}_{i}}g^{t}_{i}$
-
+$$
+θ^{t+1}_{i} = θ^{t}_{i} - \frac{\alpha}{\sigma^{t}_{i}}g^{t}_{i}
+$$
 `σ`最常用的设置方式为RMSProp，引入超参数$\beta_2$，常设置为0.999
+$$
+\sigma^{t}_{i}=\sqrt{\beta_2\sigma^{t-1}_{i}+(1-{\beta_2})(g^{t}_i{})^{2}}
+$$
 
-$\sigma^{t}_{i}=\sqrt{{\beta_2}\sigma^{t-1}_{i}+(1-{\beta_2})(g^{t}_i{})^{2}}$
 
 其中当$\beta_2$接近一时，`σ`的变化取决于当前的梯度计算，梯度越大，更新的步伐就会变小。
 
@@ -224,16 +227,25 @@ $\sigma^{t}_{i}=\sqrt{{\beta_2}\sigma^{t-1}_{i}+(1-{\beta_2})(g^{t}_i{})^{2}}$
 
 详细来说就是对上述两种做下面的公式：
 
-$m^{'}=\frac{m}{1-{\beta_1}^k}$
+$$
+m^{'}=\frac{m}{1-{\beta_1}^k}
+$$
 
-$\sigma^{'}=\frac{\sigma}{1-{\beta_2}^k}$
+$$
+
+\sigma^{'}=\frac{\sigma}{1-{\beta_2}^k}
+$$
+
+
 
 #### 总结
 
 RMSProp + momentum + warm up
 
-最终就是：$θ^{t+1} = θ^{t} - \frac{\alpha}{\sigma^{t}+\delta}m^{t}$
-
+最终就是：
+$$
+θ^{t+1} = θ^{t} - \frac{\alpha}{\sigma^{t}+\delta}m^{t}
+$$
 加上$\delta$是防止除零，默认1e-8。
 
 
