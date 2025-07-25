@@ -22,16 +22,16 @@ jobs:
         run: npm run docs:build
       - name: create-CNAME
         run: touch docs/.vuepress/dist/CNAME && echo "zzzyss.top" > docs/.vuepress/dist/CNAME
-      - name: deploy file
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-            username: ${{secrets.USERNAME}}
-            server: ${{ secrets.HOST }}
-            password: ${{ secrets.PASSWORD }} 
-            port: ${{ secrets.PORT }}
-            local_path: 'docs/.vuepress/dist'
-            remote_path: '/root/page'
-            sftpArgs: '-o ConnectTimeout=10'
+      # - name: deploy file
+      #   uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      #   with:
+      #       username: ${{secrets.USERNAME}}
+      #       server: ${{ secrets.HOST }}
+      #       password: ${{ secrets.PASSWORD }} 
+      #       port: ${{ secrets.PORT }}
+      #       local_path: 'docs/.vuepress/dist'
+      #       remote_path: '/root/page'
+      #       sftpArgs: '-o ConnectTimeout=10'
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
