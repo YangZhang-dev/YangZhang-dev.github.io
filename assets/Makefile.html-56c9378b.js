@@ -1,0 +1,14 @@
+import{_ as a,o as e,c as s,e as n}from"./app-8f4b6e6f.js";const c={},i=n(`<h2 id="双文件简单编译" tabindex="-1"><a class="header-anchor" href="#双文件简单编译" aria-hidden="true">#</a> 双文件简单编译</h2><div class="language-makefile line-numbers-mode" data-ext="makefile"><pre class="language-makefile"><code><span class="token target symbol">all</span><span class="token punctuation">:</span> f
+
+<span class="token comment"># 链接</span>
+<span class="token target symbol">f</span><span class="token punctuation">:</span> f1.o f2.o
+	gcc f1.o f2.o -o f
+<span class="token comment"># 对于f1.o gcc会自动编译</span>
+<span class="token comment"># 而由于f2.o 我们需要指定头文件路径，故手动声明</span>
+<span class="token target symbol">f2.o</span><span class="token punctuation">:</span>
+	gcc -c f2.c -I./tt 
+<span class="token target symbol">clean</span><span class="token punctuation">:</span>
+	rm -f f f1.o f2.o
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="复杂编译" tabindex="-1"><a class="header-anchor" href="#复杂编译" aria-hidden="true">#</a> 复杂编译</h2><p>.PHONY修饰的目标就是只有规则没有依赖，每次都执行。</p><h2 id="符号" tabindex="-1"><a class="header-anchor" href="#符号" aria-hidden="true">#</a> 符号</h2><p><code>@</code>表示静默执行，不显示这条命令</p><p><code>$@</code>表示目标项，<code>$^</code>表示所有依赖文件。</p><div class="language-makefile line-numbers-mode" data-ext="makefile"><pre class="language-makefile"><code><span class="token target symbol">app</span><span class="token punctuation">:</span> main.o utils.o
+	<span class="token operator">@</span>gcc -o <span class="token variable">$@</span> <span class="token variable">$^</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>等价于<code>gcc -o app main.o utils.o</code>，且静默执行。</p><h2 id="内置函数" tabindex="-1"><a class="header-anchor" href="#内置函数" aria-hidden="true">#</a> 内置函数</h2><h3 id="patsubst" tabindex="-1"><a class="header-anchor" href="#patsubst" aria-hidden="true">#</a> patsubst</h3><p><code>$(patsubst %.c,%.o, a.c b.c)</code></p><p>把字串“a.c b.c”符合模式[%.c]的单词替换成[%.o]，返回结果是“a.o b.o”</p><p><code>OBJECTS=$(patsubst %.c,%.o,$(SOURCES))</code>生成源文件对应的目标文件名字。</p><h3 id="addprefix" tabindex="-1"><a class="header-anchor" href="#addprefix" aria-hidden="true">#</a> addprefix</h3><p><code>$(addprefix src/,foo bar)</code></p><p>返回值为<code>src/foo src/bar</code>。</p>`,17),d=[i];function o(t,l){return e(),s("div",null,d)}const p=a(c,[["render",o],["__file","Makefile.html.vue"]]);export{p as default};

@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,a as c}from"./app-8f4b6e6f.js";const _={},s=c("p",null,"复旦大学25级硕士，对后端开发有浅显认识，对体系结构和大模型感兴趣，欢迎各位伙伴交流学习。",-1),n=[s];function a(r,l){return t(),o("div",null,n)}const d=e(_,[["render",a],["__file","About.html.vue"]]);export{d as default};
